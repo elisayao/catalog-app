@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 from apiclient import discovery
-from database_setup import Base, User, Category, Item
+from catalogapp.database_setup import Base, User, Category, Item
 from flask import (
    abort,
    flash,
@@ -26,7 +26,7 @@ app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///categories.db"
 db = SQLAlchemy(app)
 
-CLIENT_ID = json.loads(open("client_secrets.json", "r").read())[
+CLIENT_ID = json.loads(open("/var/www/FLASKAPPS/catalogapp/client_secrets.json", "r").read())[
     "web"]["client_id"]
 
 # Preload all the categories here since they won't change.
@@ -45,7 +45,7 @@ def gconnect():
     # Set path to the Web application client_secret_*.json file you downloaded
     # from the Google API Console:
     # https://console.developers.google.com/apis/credentials
-    CLIENT_SECRET_FILE = "client_secrets.json"
+    CLIENT_SECRET_FILE = "/var/www/FLASKAPPS/catalogapp/client_secrets.json"
 
     auth_code = request.data
     # Exchange auth code for access token, refresh token, and ID token
