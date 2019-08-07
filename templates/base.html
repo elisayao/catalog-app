@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Catalog</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+  <meta name="google-signin-scope" content="profile email">
+  <meta name="google-signin-client_id"
+    content="712458747824-e0s5igscumvnj05gcogpbgtlkse00fl0.apps.googleusercontent.com">
+  <script src="https://apis.google.com/js/platform.js?onload=start" async defer></script>
+  <style>
+    /* Set height of the grid so .sidenav can be 100% (adjust if needed) */
+    .row.content {
+      height: 500px
+    }
+
+    /* Set gray background color and 100% height */
+    .sidenav {
+      background-color: #f1f1f1;
+      height: 100%;
+    }
+
+    /* Set black background color, white text and some padding */
+    footer {
+      background-color: #555;
+      color: white;
+      padding: 15px;
+    }
+
+    /* On small screens, set height to 'auto' for sidenav and grid */
+    @media screen and (max-width: 767px) {
+      .sidenav {
+        height: auto;
+        padding: 15px;
+      }
+
+      .row.content {
+        height: auto;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="/">Catalog App</a>
+      </div>
+      <ul class="nav navbar-nav navbar-right">
+        {% if 'username' is in session %}
+        <li>
+          <h5 style="color:grey;">Welcome {{session['username']}}!</h5>
+        </li>
+        <li><a href="#" onclick="signOut();">Sign out</a></li>
+        {% else %}
+        <li><a href="#" onclick="signIn();"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+        {% endif %}
+      </ul>
+    </div>
+  </nav>
+
+  <script>
+    function start() {
+      gapi.load('auth2', function () {
+        auth2 = gapi.auth2.init({
+          client_id: '712458747824-e0s5igscumvnj05gcogpbgtlkse00fl0.apps.googleusercontent.com',
+        });
+      });
+    }
+
+    function signIn() {
+      auth2.grantOfflineAccess().then(signInCallback);
+    }
+
+    function signInCallback(authResult) {
+      if (authResult['code']) {
+        // Send the code to the server
+        $.ajax({
+          type: 'POST',
+          url: '/gconnect?state={{state}}',
+          // Always include an `X-Requested-With` header in every AJAX request,
+          // to protect against CSRF attacks.
+          headers: {
+            'X-Requested-With': 'XMLHttpRequest'
+          },
+          contentType: 'application/octet-stream; charset=utf-8',
+          success: function (result) {
+            window.location = '/'
+            console.log('User signed in.');
+          },
+          processData: false,
+          data: authResult['code']
+        });
+      } else {
+        // There was an error.
+      }
+    }
+
+    function signOut() {
+      var auth2 = gapi.auth2.getAuthInstance();
+      auth2.signOut().then(function () {
+        // Send the code to the server
+        $.ajax({
+          type: 'GET',
+          url: '/gdisconnect',
+          contentType: 'application/octet-stream; charset=utf-8',
+          success: function (result) {
+            window.location = '/'
+            console.log('User signed out.');
+          },
+          processData: false,
+        });
+      });
+    }
+  </script>
+
+  <div class="container-fluid">
+    <div class="row content">
+      {% block sidenav %}
+      {% endblock %}
+      <div class="col-sm-9">
+        {% block content %}
+        {% endblock %}
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>

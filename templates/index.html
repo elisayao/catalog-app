@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block sidenav %}
+{% include 'sidenav.html' %}
+{% endblock %}
+{% block content %}
+	<div class = 'flash'>
+		{% with messages = get_flashed_messages() %}
+		{% if messages %}
+			{% for message in messages %}
+			<p style="color:grey;">{{ message }}</p>
+			{% endfor %}
+		{% endif %}
+		{% endwith %}
+	</div>
+	{% if 'username' is in session %}
+		<a href="{{url_for('addItem')}}">Add Item</a>
+	{% endif %}
+  <h2>Latest Items</h2>
+  {% for item in items %}
+  <li>
+    <a href="{{url_for('showItem', category_name = item.category.name, item_name = item.name)}}">
+      {{item.name}} ({{item.category.name}})
+    </a>
+  </li>
+  {% endfor %}
+{% endblock %}

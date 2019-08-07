@@ -1,0 +1,9 @@
+<div class="col-sm-3 sidenav">
+  <ul class="nav nav-pills nav-stacked">
+    {% for category in categories %}
+    <li><a href="{{url_for('showCategory', category_name = category.name)}}">
+        {{category.name}}
+      </a></li>
+    {% endfor %}
+  </ul><br>
+</div>
