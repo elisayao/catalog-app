@@ -5,11 +5,11 @@ from flask import (
    abort,
    flash,
    Flask,
-   make_response
+   make_response,
    render_template,
    request,
    redirect,
-   jsoinify,
+   jsonify,
    url_for,
    session as login_session
 )
