@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 from apiclient import discovery
-from database_setup import Base, User, Category, Item
+from catalogapp.database_setup import Base, User, Category, Item
 from flask import (
    abort,
    flash,

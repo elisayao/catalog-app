@@ -17,7 +17,7 @@ You can access the website from http://http://34.209.212.196.xip.io
   ```
 * libapache2-mod-wsgi-py3
   ```
-  sudo apt-get install libapache2-mod-wsgi-py3)
+  sudo apt-get install libapache2-mod-wsgi-py3
   ```
 * python3-venv
   ```
@@ -28,9 +28,11 @@ You can access the website from http://http://34.209.212.196.xip.io
 Setup the project's python environment by running the following commend in
 the repo directory.
 ```
+cd catalogapp
 python3 -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt 
+python3 init_categories.py
 ```
 
 ### Depoly the app to apache2
