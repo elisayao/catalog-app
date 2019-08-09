@@ -43,3 +43,8 @@ sudo sh deploy.sh
 
 ### For Udacity Grader
 You can ssh the server using the username **grader** at 34.209.212.196 with port number 2200. A public key has already been setup for your access.
+
+### Reference
+* Udacity [Full Stack Web Developer Nanodegree Program](https://classroom.udacity.com/nanodegrees/nd004/dashboard/overview)
+* Udacity [Configuring Linux Web Services](https://classroom.udacity.com/courses/ud299) Course
+* [Google OAuth2 API](https://developers.google.com/identity/protocols/OAuth2)
