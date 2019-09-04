@@ -7,7 +7,7 @@ You can login the app using Google login. Logined users will have the ability to
 ## Deploy the Project
 This project can be deployed to a Ubuntu server using the following step.
 As an example, the project is deployed to an Amazon Lightsail server.
-You can access the website from http://http://34.209.212.196.xip.io
+You can access the website from http://34.209.212.196.xip.io
 
 ### Prerequisites
 * [Python 3](https://www.python.org/downloads/)
